@@ -1,4 +1,6 @@
 class Config
+  ACCELERATION_RATE = 0.04
+
   TILE_SIZE = 20
   WINDOW_SIZE = TILE_SIZE ** 2
 end

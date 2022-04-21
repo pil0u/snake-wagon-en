@@ -24,13 +24,16 @@ class Game < Gosu::Window
 
     if @food.eaten_by?(@snake)
       # The snake grows
+      @snake.grow
+
       # The snake speeds up
+      accelerate
+
       # My score increases
 
       # Some new food appears
       @food = Food.popup
     end
-
 
     @last_timestamp = Time.now
   end
@@ -41,6 +44,10 @@ class Game < Gosu::Window
   end
 
   private
+
+  def accelerate
+    @refresh_rate = @refresh_rate * (1 - Config::ACCELERATION_RATE)
+  end
 
   def update_snake_direction
     if Gosu.button_down?(Gosu::KB_RIGHT) && @snake.direction != "left"
