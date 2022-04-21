@@ -1,6 +1,7 @@
 require_relative "config"
 
 class Snake
+  attr_reader :x, :y
   attr_accessor :direction
 
   TILE_SIZE = Config::TILE_SIZE

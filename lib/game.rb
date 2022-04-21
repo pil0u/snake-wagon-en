@@ -1,6 +1,7 @@
 require 'gosu'
 
 require_relative "config"
+require_relative "food"
 require_relative "snake"
 
 class Game < Gosu::Window
@@ -12,6 +13,7 @@ class Game < Gosu::Window
     @last_timestamp = Time.now
 
     @snake = Snake.new
+    @food = Food.popup
   end
 
   def update
@@ -20,11 +22,22 @@ class Game < Gosu::Window
     update_snake_direction
     @snake.move
 
+    if @food.eaten_by?(@snake)
+      # The snake grows
+      # The snake speeds up
+      # My score increases
+
+      # Some new food appears
+      @food = Food.popup
+    end
+
+
     @last_timestamp = Time.now
   end
 
   def draw
     @snake.draw
+    @food.draw
   end
 
   private
