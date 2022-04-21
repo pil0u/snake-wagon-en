@@ -35,6 +35,12 @@ class Game < Gosu::Window
       @food = Food.popup
     end
 
+    if @snake.dead?
+      sleep(3)
+
+      reset_game
+    end
+
     @last_timestamp = Time.now
   end
 
@@ -47,6 +53,14 @@ class Game < Gosu::Window
 
   def accelerate
     @refresh_rate = @refresh_rate * (1 - Config::ACCELERATION_RATE)
+  end
+
+  def reset_game
+    @refresh_rate = 0.1
+    @last_timestamp = Time.now
+
+    @snake = Snake.new
+    @food = Food.popup
   end
 
   def update_snake_direction

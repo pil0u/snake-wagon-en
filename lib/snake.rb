@@ -5,6 +5,7 @@ class Snake
   attr_accessor :direction
 
   TILE_SIZE = Config::TILE_SIZE
+  WINDOW_SIZE = Config::WINDOW_SIZE
 
   def initialize
     @x = TILE_SIZE
@@ -13,6 +14,13 @@ class Snake
     @tail_size = 0
 
     @direction = "right"
+  end
+
+  def dead?
+    outside_window = (@x < 0 || @x >= WINDOW_SIZE || @y < 0 || @y >= WINDOW_SIZE)
+    on_itself = @tail_tiles.include? [@x, @y]
+
+    outside_window || on_itself
   end
 
   def grow
