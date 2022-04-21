@@ -8,12 +8,14 @@ class Game < Gosu::Window
   def initialize
     super Config::WINDOW_SIZE, Config::WINDOW_SIZE
     self.caption = "Le Wagon Snake"
+    @font = Gosu::Font.new(24)
 
     @refresh_rate = 0.1
     @last_timestamp = Time.now
 
     @snake = Snake.new
     @food = Food.popup
+    @score = 0
   end
 
   def update
@@ -30,6 +32,7 @@ class Game < Gosu::Window
       accelerate
 
       # My score increases
+      @score += 1
 
       # Some new food appears
       @food = Food.popup
@@ -47,6 +50,8 @@ class Game < Gosu::Window
   def draw
     @snake.draw
     @food.draw
+
+    @font.draw_text("Score: #{@score}", 10, 10, 0, 1, 1, Gosu::Color::YELLOW)
   end
 
   private
@@ -61,6 +66,7 @@ class Game < Gosu::Window
 
     @snake = Snake.new
     @food = Food.popup
+    @score = 0
   end
 
   def update_snake_direction
