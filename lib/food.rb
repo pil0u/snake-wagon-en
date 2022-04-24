@@ -6,6 +6,7 @@ class Food
   def initialize(x, y)
     @x = x
     @y = y
+    @image = Gosu::Image.new("./media/rabbit.png")
   end
 
   def self.popup
@@ -20,6 +21,11 @@ class Food
   end
 
   def draw
-    Gosu.draw_rect(@x, @y, TILE_SIZE, TILE_SIZE, Gosu::Color::RED)
+    # Gosu.draw_rect(@x, @y, TILE_SIZE, TILE_SIZE, Gosu::Color::RED)
+    @image.draw(
+      @x, @y, 0,
+      scale_x=TILE_SIZE.to_f/@image.width,
+      scale_y=TILE_SIZE.to_f/@image.width
+    )
   end
 end

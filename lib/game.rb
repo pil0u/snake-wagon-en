@@ -8,6 +8,7 @@ class Game < Gosu::Window
   def initialize
     super Config::WINDOW_SIZE, Config::WINDOW_SIZE
     self.caption = "Le Wagon Snake"
+    @background_image = Gosu::Image.new("./media/background.jpg", tileable: true)
     @font = Gosu::Font.new(24)
 
     @refresh_rate = 0.1
@@ -48,6 +49,8 @@ class Game < Gosu::Window
   end
 
   def draw
+    @background_image.draw(0, 0, 0)
+
     @snake.draw
     @food.draw
 
