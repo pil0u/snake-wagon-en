@@ -26,6 +26,8 @@ class Game < Gosu::Window
     @snake.move
 
     if @food.eaten_by?(@snake)
+      @food.play_sound
+
       # The snake grows
       @snake.grow
 
@@ -40,7 +42,9 @@ class Game < Gosu::Window
     end
 
     if @snake.dead?
+      sound = @snake.play_dead_sound
       sleep(3)
+      sound.stop
 
       reset_game
     end

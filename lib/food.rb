@@ -7,6 +7,7 @@ class Food
     @x = x
     @y = y
     @image = Gosu::Image.new("./media/rabbit.png")
+    @sound = Gosu::Sample.new("./media/food.mp3")
   end
 
   def self.popup
@@ -18,6 +19,10 @@ class Food
 
   def eaten_by?(snake)
     snake.x == @x && snake.y == @y
+  end
+
+  def play_sound
+    @sound.play(volume=0.2)
   end
 
   def draw
