@@ -11,6 +11,8 @@ class Game < Gosu::Window
     @background_image = Gosu::Image.new("./media/background.jpg", tileable: true)
     @font = Gosu::Font.new(24)
 
+    self.initialize_highscore
+
     @refresh_rate = 0.1
     @last_timestamp = Time.now
 
@@ -46,6 +48,11 @@ class Game < Gosu::Window
       sleep(3)
       sound.stop
 
+      if @score > @highscore
+        @highscore = @score
+        update_highscore(@highscore)
+      end
+
       reset_game
     end
 
@@ -58,13 +65,30 @@ class Game < Gosu::Window
     @snake.draw
     @food.draw
 
-    @font.draw_text("Score: #{@score}", 10, 10, 0, 1, 1, Gosu::Color::YELLOW)
+    @font.draw_text("Score: #{@score} / High score: #{@highscore}", 10, 10, 0, 1, 1, Gosu::Color::YELLOW)
   end
 
   private
 
   def accelerate
     @refresh_rate = @refresh_rate * (1 - Config::ACCELERATION_RATE)
+  end
+
+  def initialize_highscore
+    if File.exist? Config::HIGH_SCORE_PATH
+      file = File.open(Config::HIGH_SCORE_PATH)
+      @highscore = file.readlines.last.split(' --- ').last.to_i
+      file.close
+    else
+      @highscore = 0
+      update_highscore(@highscore)
+    end
+  end
+
+  def update_highscore(score)
+    file = File.new(Config::HIGH_SCORE_PATH, "a")
+    file.puts("#{Time.now.strftime("%Y-%m-%d %H:%M:%S")} --- #{score}")
+    file.close
   end
 
   def reset_game
@@ -88,4 +112,3 @@ class Game < Gosu::Window
     end
   end
 end
-
